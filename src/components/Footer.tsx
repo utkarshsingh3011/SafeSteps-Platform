@@ -100,7 +100,7 @@ export default function Footer() {
           <ul className="space-y-2">
             <li>
               <a
-                href="https://github.com/utkarshsingh3011"
+                href="https://github.com/utkarshsingh3011/SafeSteps-Platform"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-emerald-400 hover:pl-1 transition-all duration-200 block"
