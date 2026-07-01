@@ -39,7 +39,7 @@ Developed as part of my cybersecurity summer training, the project explores how 
 **Utkarsh Singh**
 
 B.Tech Electronics & Communication Engineering (ECE)
-Interested in Cybersecurity, Web Development, and building practical security-focused applications.
+Interested in Cybersecurity and building practical security-focused applications.
 
 ---
 
