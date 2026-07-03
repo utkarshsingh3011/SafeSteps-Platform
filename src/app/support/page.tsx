@@ -43,7 +43,7 @@ const GLOSSARY = [
 
 export default function SupportPage() {
   const { showToast } = useToast();
-  
+
   // FAQs accordion state
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
@@ -88,10 +88,10 @@ export default function SupportPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
+
         {/* Left Column (8/12): FAQs, Glossary, Helplines */}
         <div className="lg:col-span-8 space-y-8">
-          
+
           {/* FAQs Accordion */}
           <div className="space-y-4">
             <h2 className="font-mono text-xs font-bold text-cyan-400 uppercase tracking-widest pl-1">
@@ -199,7 +199,7 @@ export default function SupportPage() {
 
         {/* Right Column (4/12): Emergency Helplines & Contact Form */}
         <div className="lg:col-span-4 space-y-8">
-          
+
           {/* Emergency Helplines */}
           <div className="space-y-4">
             <h2 className="font-mono text-xs font-bold text-cyan-400 uppercase tracking-widest pl-1">
@@ -211,7 +211,7 @@ export default function SupportPage() {
                 <PhoneCall className="w-4 h-4" />
                 <span>IMMEDIATE HELPLINES</span>
               </div>
-              
+
               <div className="space-y-3.5 font-inter text-xs text-white">
                 <div className="border-b border-white/5 pb-2.5">
                   <span className="text-white/40 block text-[9px] font-mono">FINANCIAL CYBER FRAUD (INDIA):</span>
@@ -235,22 +235,22 @@ export default function SupportPage() {
 
             <Panel title="Educational Request Desk" idTag="CONTACT" noHoverAnim={true} topBorderColor="cyan">
               <div className="space-y-4 py-1 text-xs font-inter">
-                
+
                 {/* Form Type Tab */}
                 <div className="flex gap-2 border-b border-white/5 pb-2.5 text-[10px] font-mono">
-                  <button 
+                  <button
                     onClick={() => { setActiveForm("feedback"); setSubmitted(false); }}
                     className={`flex-1 py-1 rounded transition-colors cursor-pointer ${activeForm === "feedback" ? "bg-cyan-950/20 border border-cyan-400/20 text-cyan-400 font-bold" : "text-white/40"}`}
                   >
                     FEEDBACK
                   </button>
-                  <button 
+                  <button
                     onClick={() => { setActiveForm("lesson"); setSubmitted(false); }}
                     className={`flex-1 py-1 rounded transition-colors cursor-pointer ${activeForm === "lesson" ? "bg-cyan-950/20 border border-cyan-400/20 text-cyan-400 font-bold" : "text-white/40"}`}
                   >
                     LESSON
                   </button>
-                  <button 
+                  <button
                     onClick={() => { setActiveForm("problem"); setSubmitted(false); }}
                     className={`flex-1 py-1 rounded transition-colors cursor-pointer ${activeForm === "problem" ? "bg-cyan-950/20 border border-cyan-400/20 text-cyan-400 font-bold" : "text-white/40"}`}
                   >

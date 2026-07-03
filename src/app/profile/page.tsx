@@ -79,7 +79,7 @@ export default function ProfilePage() {
   const totalQuizzesPassed = Object.keys(quizzes).filter((k) => quizzes[k]).length;
   const totalActivitiesDone = Object.keys(activities).filter((k) => activities[k]).length;
   const totalCasesSolved = Object.keys(cases).filter((k) => cases[k]).length;
-  
+
   // Calculate completed units (all quizzes + activities + case study completed in that unit)
   const totalUnitsCompleted = CURRICULUM.filter((unit) => {
     const lessonsDone = unit.lessons.every((l) => quizzes[l.id] && activities[l.id]);
@@ -89,18 +89,18 @@ export default function ProfilePage() {
 
   // Calculate dynamic hours spent learning
   const timeSpentMinutes = 2 + (totalQuizzesPassed * 3) + (totalActivitiesDone * 4) + (totalCasesSolved * 6);
-  
+
   // Community stats (read from local storage reports counts)
   const getCommunityContributionStats = () => {
     if (typeof window === "undefined") return { reports: 0, actions: 0 };
     try {
       const reports = JSON.parse(localStorage.getItem("safesteps_community_reports") || "[]");
       const votes = Object.keys(JSON.parse(localStorage.getItem("safesteps_community_votes") || "{}")).length;
-      
+
       // Filter reports submitted by guest vs user (or just use total added items in reports key that don't match default IDs)
       const defaultIds = ["rep-1", "rep-2", "rep-3", "rep-4"];
       const userSubmitted = reports.filter((r: { id: string }) => !defaultIds.includes(r.id)).length;
-      
+
       return {
         reports: userSubmitted,
         actions: votes + userSubmitted
@@ -151,7 +151,7 @@ export default function ProfilePage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
+
         {/* Left Column: Learning stats (5/12) */}
         <div className="lg:col-span-5 space-y-6">
           <h2 className="font-mono text-xs font-bold text-cyan-400 uppercase tracking-widest pl-1">
@@ -160,7 +160,7 @@ export default function ProfilePage() {
 
           <Panel title="Academic Summary" idTag="STATS" noHoverAnim={true}>
             <div className="space-y-4 py-2 font-inter text-xs">
-              
+
               {/* Stat row: Units finished */}
               <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <span className="text-on-surface-variant">Units Fully Mastered:</span>
@@ -232,22 +232,20 @@ export default function ProfilePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
               {BADGES_INFO.map((badge) => {
                 const isUnlocked = unlockedBadges.includes(badge.id);
-                
+
                 return (
                   <div
                     key={badge.id}
                     title={isUnlocked ? `Unlocked: ${badge.desc}` : `Locked: ${badge.req}`}
-                    className={`p-4 border rounded-2xl flex items-start gap-3 transition-all ${
-                      isUnlocked
+                    className={`p-4 border rounded-2xl flex items-start gap-3 transition-all ${isUnlocked
                         ? "border-emerald-500/25 bg-emerald-950/5 shadow-sm"
                         : "border-white/5 bg-white/[0.005] opacity-40"
-                    }`}
+                      }`}
                   >
-                    <div className={`p-2 rounded-xl border flex-shrink-0 ${
-                      isUnlocked
+                    <div className={`p-2 rounded-xl border flex-shrink-0 ${isUnlocked
                         ? "border-emerald-400 text-emerald-400 bg-emerald-950/20"
                         : "border-white/10 text-white/20"
-                    }`}>
+                      }`}>
                       {badge.icon}
                     </div>
 
@@ -258,9 +256,8 @@ export default function ProfilePage() {
                       <p className="text-[10px] text-on-surface-variant/80 leading-relaxed">
                         {isUnlocked ? badge.desc : `Criteria: ${badge.req}`}
                       </p>
-                      <span className={`text-[8px] font-mono font-bold block uppercase tracking-wider ${
-                        isUnlocked ? "text-emerald-400" : "text-white/20"
-                      }`}>
+                      <span className={`text-[8px] font-mono font-bold block uppercase tracking-wider ${isUnlocked ? "text-emerald-400" : "text-white/20"
+                        }`}>
                         {isUnlocked ? "✓ Unlocked" : "🔒 Locked"}
                       </span>
                     </div>

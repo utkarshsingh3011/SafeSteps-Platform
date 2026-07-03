@@ -25,18 +25,18 @@ const CATEGORIES = ["UPI Fraud", "Courier Scam", "WhatsApp Scam", "Fake Internsh
 
 export default function CommunityPage() {
   const { showToast } = useToast();
-  
+
   // Reports states
   const [reports, setReports] = useState<CommunityReport[]>([]);
   const [votesMap, setVotesMap] = useState<Record<string, boolean>>({});
-  
+
   // Form states
   const [showForm, setShowForm] = useState(false);
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
-  
+
   // Comments states
   const [expandedCommentsId, setExpandedCommentsId] = useState<string | null>(null);
   const [newCommentText, setNewCommentText] = useState("");
@@ -120,10 +120,10 @@ export default function CommunityPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
+
         {/* Left Column (8/12): Form & Reports Feed */}
         <div className="lg:col-span-8 space-y-6">
-          
+
           {/* Submit Report Form */}
           <AnimatePresence>
             {showForm && (
@@ -229,7 +229,7 @@ export default function CommunityPage() {
                               {report.category}
                             </span>
                           </div>
-                          
+
                           <div className="flex flex-wrap gap-3 text-[10px] text-on-surface-variant/60 font-mono pt-1">
                             {report.location && (
                               <span className="flex items-center gap-1">
@@ -244,13 +244,12 @@ export default function CommunityPage() {
                           </div>
                         </div>
 
-                        <span className={`text-[9px] font-mono font-bold uppercase px-2.5 py-0.5 border rounded ${
-                          report.status === "Verified"
+                        <span className={`text-[9px] font-mono font-bold uppercase px-2.5 py-0.5 border rounded ${report.status === "Verified"
                             ? "border-emerald-500/30 bg-emerald-950/20 text-emerald-400"
                             : report.status === "Pending"
-                            ? "border-amber-500/30 bg-amber-950/20 text-amber-400 animate-pulse"
-                            : "border-white/10 bg-white/5 text-white/40"
-                        }`}>
+                              ? "border-amber-500/30 bg-amber-950/20 text-amber-400 animate-pulse"
+                              : "border-white/10 bg-white/5 text-white/40"
+                          }`}>
                           {report.status}
                         </span>
                       </div>
@@ -263,9 +262,8 @@ export default function CommunityPage() {
                       <div className="flex gap-4 pt-2 border-t border-white/5 font-mono text-[10px]">
                         <button
                           onClick={() => handleVote(report.id)}
-                          className={`flex items-center gap-1.5 transition-colors cursor-pointer ${
-                            hasVoted ? "text-cyan-400 font-bold" : "text-on-surface-variant hover:text-white"
-                          }`}
+                          className={`flex items-center gap-1.5 transition-colors cursor-pointer ${hasVoted ? "text-cyan-400 font-bold" : "text-on-surface-variant hover:text-white"
+                            }`}
                         >
                           <ThumbsUp className="w-3.5 h-3.5" />
                           <span>{report.votes} Helpful</span>

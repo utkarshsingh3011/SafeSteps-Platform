@@ -49,7 +49,7 @@ const CYBER_TIPS = [
 export default function Home() {
   const { showToast } = useToast();
   const { user, isGuest } = useAuth();
-  
+
   // Progress states
   const [completedQuizzes, setCompletedQuizzes] = useState<Record<string, boolean>>({});
   const [completedActivities, setCompletedActivities] = useState<Record<string, boolean>>({});
@@ -58,7 +58,7 @@ export default function Home() {
   const [animatedScore, setAnimatedScore] = useState(20);
   const [tipIndex, setTipIndex] = useState(0);
   const [unlockedBadgesCount, setUnlockedBadgesCount] = useState(0);
-  
+
   // Weekly challenge state
   const [challengeAnswer, setChallengeAnswer] = useState<string | null>(null);
   const [challengeChecked, setChallengeChecked] = useState(false);
@@ -97,11 +97,11 @@ export default function Home() {
     let start = animatedScore;
     const end = safetyScore;
     if (start === end) return;
-    
+
     const duration = 800; // ms
     const increment = end > start ? 1 : -1;
     const stepTime = Math.abs(Math.floor(duration / (end - start)));
-    
+
     const timer = setInterval(() => {
       start += increment;
       setAnimatedScore(start);
@@ -155,7 +155,7 @@ export default function Home() {
       setChallengeChecked(true);
       setShowChallengeBadge(true);
       showToast("Correct! Weekly Challenge complete. +10 XP!", "success");
-      
+
       // Unlock badge in local storage
       const badges = JSON.parse(localStorage.getItem("safesteps_achievements") || "[]");
       if (!badges.includes("weekly-challenger")) {
@@ -190,7 +190,7 @@ export default function Home() {
 
   return (
     <div className="space-y-10 max-w-6xl mx-auto">
-      
+
       {/* 1. Hero & Welcome */}
       <motion.div
         initial="hidden"
@@ -262,10 +262,10 @@ export default function Home() {
 
       {/* Main Content Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
+
         {/* Left Column (8/12): Awareness, Featured Lesson, Challenges, Reports */}
         <div className="lg:col-span-8 space-y-8">
-          
+
           {/* 2. Latest Awareness */}
           <div className="space-y-4">
             <h2 className="font-mono text-xs font-bold text-cyan-400 uppercase tracking-widest pl-1">
@@ -389,13 +389,12 @@ export default function Home() {
                 <div className="flex flex-col gap-2 font-inter text-xs">
                   <button
                     onClick={() => !challengeChecked && setChallengeAnswer("A")}
-                    className={`w-full text-left p-3.5 border rounded-xl transition-all cursor-pointer ${
-                      challengeAnswer === "A"
+                    className={`w-full text-left p-3.5 border rounded-xl transition-all cursor-pointer ${challengeAnswer === "A"
                         ? challengeChecked
                           ? "border-red-500 bg-red-950/10 text-red-400 font-bold"
                           : "border-cyan-400 bg-cyan-950/10 text-cyan-400"
                         : "border-white/5 bg-white/[0.01] hover:bg-white/[0.03] text-on-surface-variant hover:text-white"
-                    }`}
+                      }`}
                     disabled={challengeChecked}
                   >
                     Option A: Read back the OTP code to verify you are the card holder.
@@ -403,13 +402,12 @@ export default function Home() {
 
                   <button
                     onClick={() => !challengeChecked && setChallengeAnswer("B")}
-                    className={`w-full text-left p-3.5 border rounded-xl transition-all cursor-pointer ${
-                      challengeAnswer === "B"
+                    className={`w-full text-left p-3.5 border rounded-xl transition-all cursor-pointer ${challengeAnswer === "B"
                         ? challengeChecked
                           ? "border-emerald-500 bg-emerald-950/10 text-emerald-400 font-bold"
                           : "border-cyan-400 bg-cyan-950/10 text-cyan-400"
                         : "border-white/5 bg-white/[0.01] hover:bg-white/[0.03] text-on-surface-variant hover:text-white"
-                    }`}
+                      }`}
                     disabled={challengeChecked}
                   >
                     Option B: Hang up. Bank automation and staff will never call to ask for OTPs or verify codes.
@@ -417,13 +415,12 @@ export default function Home() {
                 </div>
 
                 {challengeChecked && (
-                  <div className={`p-4 rounded-xl border font-inter text-xs leading-relaxed ${
-                    challengeAnswer === "B" ? "border-emerald-500/20 bg-emerald-950/5 text-emerald-400/90" : "border-red-500/20 bg-red-950/5 text-red-400/90"
-                  }`}>
+                  <div className={`p-4 rounded-xl border font-inter text-xs leading-relaxed ${challengeAnswer === "B" ? "border-emerald-500/20 bg-emerald-950/5 text-emerald-400/90" : "border-red-500/20 bg-red-950/5 text-red-400/90"
+                    }`}>
                     <span className="font-mono text-[9px] font-bold uppercase tracking-wider block mb-1">
                       {challengeAnswer === "B" ? "Correct! 🎉" : "Incorrect. ⚠️"}
                     </span>
-                    {challengeAnswer === "B" 
+                    {challengeAnswer === "B"
                       ? "Excellent decision. Banks will NEVER ask you for a One-Time Password (OTP) or verification code. Tapping codes on calls approvals triggers transactions out of your account."
                       : "DANGER! Reading verification codes sent to your device allows hackers to complete transactions or hijack credentials. Try again!"
                     }
@@ -434,7 +431,7 @@ export default function Home() {
                   <span className="text-[10px] text-on-surface-variant font-mono font-bold uppercase text-emerald-400">
                     REWARD: WEEKLY CHALLENGE BADGE
                   </span>
-                  
+
                   {!challengeChecked ? (
                     <Button variant="action" onClick={handleWeeklyChallengeSubmit} disabled={!challengeAnswer}>
                       Submit Challenge
@@ -479,7 +476,7 @@ export default function Home() {
                       <span>Votes: {report.votes} helpful</span>
                     </div>
                   </div>
-                  
+
                   <span className="text-[9px] font-mono text-emerald-400 bg-emerald-950/25 px-2 py-0.5 border border-emerald-500/20 rounded uppercase">
                     {report.status}
                   </span>
@@ -498,7 +495,7 @@ export default function Home() {
 
           <Panel title="Safety Level Stats" idTag="PROGRESS" noHoverAnim={true} topBorderColor="cyan">
             <div className="space-y-6 py-2">
-              
+
               {/* Circular Meter */}
               <div className="flex flex-col items-center justify-center">
                 <div className="relative w-28 h-28 flex items-center justify-center">
@@ -518,7 +515,7 @@ export default function Home() {
                       style={{ filter: "drop-shadow(0px 0px 4px rgba(34, 211, 238, 0.25))" }}
                     />
                   </svg>
-                  
+
                   <div className="absolute flex flex-col items-center justify-center">
                     <span className="font-outfit text-2.5xl font-extrabold text-white leading-none">{animatedScore}%</span>
                     <span className="font-mono text-[9px] text-cyan-400 font-bold uppercase tracking-wider mt-0.5">Secure</span>

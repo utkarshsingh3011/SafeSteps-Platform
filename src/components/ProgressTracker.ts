@@ -235,7 +235,7 @@ export function addCommunityReport(report: Omit<CommunityReport, "id" | "votes" 
 export function voteCommunityReport(reportId: string): number {
   const reports = getCommunityReports();
   const votes = getJSONItem<{ [id: string]: boolean }>(VOTES_KEY, {});
-  
+
   const reportIndex = reports.findIndex((r) => r.id === reportId);
   if (reportIndex === -1) return 0;
 
@@ -295,7 +295,7 @@ export function markCheckCompleted(checkId: keyof CompletedChecks, completed: bo
     privacy: "lesson-4-1",
     browser: "lesson-4-2"
   };
-  
+
   markQuizCompleted(lessonMapping[checkId], completed);
   markActivityCompleted(lessonMapping[checkId], completed);
 }
@@ -317,7 +317,7 @@ export function calculateSafetyScore(): number {
   // - 4% for each lesson quiz passed (12 lessons * 4% = 48%)
   // - 4% for each lesson activity completed (12 lessons * 4% = 48%)
   // - 4% for support page glossary audit (4%)
-  
+
   const lessonIds = [
     "lesson-1-1", "lesson-1-2", "lesson-1-3",
     "lesson-2-1", "lesson-2-2", "lesson-2-3",
@@ -405,6 +405,6 @@ export function resetAllProgress() {
   localStorage.removeItem(ACHIEVEMENTS_KEY);
   localStorage.removeItem(REPORTS_KEY);
   localStorage.removeItem(VOTES_KEY);
-  
+
   window.dispatchEvent(new Event("safesteps_progress_changed"));
 }

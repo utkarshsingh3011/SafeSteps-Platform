@@ -39,7 +39,7 @@ export default function LearnPage() {
   const [activeTab, setActiveTab] = useState<"learn" | "practice" | "quiz">("learn");
   const [showCaseStudy, setShowCaseStudy] = useState<boolean>(false);
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
-  
+
   // Progress states
   const [completedActivities, setCompletedActivities] = useState<Record<string, boolean>>({});
   const [completedQuizzes, setCompletedQuizzes] = useState<Record<string, boolean>>({});
@@ -74,7 +74,7 @@ export default function LearnPage() {
         completed++;
       }
     });
-    
+
     // Case study adds weight too
     const caseDone = completedCases[unit.id];
     const totalItems = totalLessons + 1;
@@ -121,18 +121,18 @@ export default function LearnPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
+
         {/* Left Column: Unit list (4/12) */}
         <div className="lg:col-span-4 space-y-6">
           <h2 className="font-mono text-xs font-bold text-cyan-400 uppercase tracking-widest pl-1">
             Curriculum Units
           </h2>
-          
+
           <div className="space-y-4">
             {CURRICULUM.map((unit) => {
               const isActive = unit.id === selectedUnitId;
               const progress = getUnitProgress(unit);
-              
+
               return (
                 <div
                   key={unit.id}
@@ -141,11 +141,10 @@ export default function LearnPage() {
                     setSelectedLessonId(null);
                     setShowCaseStudy(false);
                   }}
-                  className={`p-5 rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between ${
-                    isActive
+                  className={`p-5 rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between ${isActive
                       ? "border-cyan-400/50 bg-gradient-to-br from-cyan-950/20 to-blue-950/20 shadow-md shadow-cyan-950/10"
                       : "border-white/10 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/20"
-                  }`}
+                    }`}
                 >
                   <div className="flex justify-between items-start gap-2">
                     <div>
@@ -191,7 +190,7 @@ export default function LearnPage() {
 
         {/* Right Column: Lessons and active content pane (8/12) */}
         <div className="lg:col-span-8 space-y-6">
-          
+
           {/* If no lesson or case study is active: show the unit outline details */}
           {!activeLesson && !showCaseStudy && (
             <motion.div
@@ -260,18 +259,16 @@ export default function LearnPage() {
                       return (
                         <div
                           onClick={() => !isLocked && handleCaseStudySelect()}
-                          className={`p-4 border rounded-2xl flex items-center justify-between transition-all ${
-                            isLocked
+                          className={`p-4 border rounded-2xl flex items-center justify-between transition-all ${isLocked
                               ? "border-white/5 bg-white/[0.005] opacity-40 cursor-not-allowed"
                               : "border-amber-500/20 bg-amber-950/5 hover:bg-amber-950/10 hover:border-amber-500/40 cursor-pointer group"
-                          }`}
+                            }`}
                         >
                           <div className="flex items-center gap-4">
-                            <div className={`w-9 h-9 border flex items-center justify-center rounded-xl transition-colors ${
-                              isLocked 
-                                ? "border-white/5 bg-white/5 text-white/20" 
+                            <div className={`w-9 h-9 border flex items-center justify-center rounded-xl transition-colors ${isLocked
+                                ? "border-white/5 bg-white/5 text-white/20"
                                 : "border-amber-400/20 bg-amber-950/20 text-amber-400 group-hover:border-amber-400/50"
-                            }`}>
+                              }`}>
                               {isLocked ? <LockKeyhole className="w-4 h-4" /> : <Award className="w-4 h-4" />}
                             </div>
                             <div>
@@ -330,16 +327,15 @@ export default function LearnPage() {
                 {(["learn", "practice", "quiz"] as const).map((tab) => {
                   const isActive = activeTab === tab;
                   const labelMap = { learn: "1. Learn Details", practice: "2. Hands-on Practice", quiz: "3. Quick Quiz" };
-                  
+
                   return (
                     <button
                       key={tab}
                       onClick={() => setActiveTab(tab)}
-                      className={`flex-1 py-3 text-xs font-mono font-bold border-b-2 transition-all cursor-pointer ${
-                        isActive
+                      className={`flex-1 py-3 text-xs font-mono font-bold border-b-2 transition-all cursor-pointer ${isActive
                           ? "border-cyan-400 text-cyan-400"
                           : "border-transparent text-on-surface-variant hover:text-white"
-                      }`}
+                        }`}
                     >
                       {labelMap[tab]}
                     </button>
@@ -557,14 +553,14 @@ function QuizRenderer({ lesson, isCompleted, onPassed }: QuizRendererProps) {
             <h4 className="text-sm font-semibold text-white font-inter">
               Q{qIdx + 1}: {q.q}
             </h4>
-            
+
             <div className="flex flex-col gap-2 font-inter text-xs">
               {q.options.map((opt, optIdx) => {
                 const isSelected = selectedAnswers[qIdx] === optIdx;
                 const isCorrect = optIdx === q.correctAnswer;
-                
+
                 let btnClass = "border-white/5 bg-white/[0.01] hover:bg-white/[0.03] text-on-surface-variant hover:text-white";
-                
+
                 if (isSelected) {
                   if (submitted) {
                     btnClass = isCorrect
@@ -589,7 +585,7 @@ function QuizRenderer({ lesson, isCompleted, onPassed }: QuizRendererProps) {
                 );
               })}
             </div>
-            
+
             {submitted && isSelectedIncorrect(selectedAnswers[qIdx], q.correctAnswer) && q.explanation && (
               <p className="text-[11px] text-red-400/90 font-inter bg-red-950/5 border border-red-950/30 p-2.5 rounded-lg leading-relaxed">
                 💡 Hint: {q.explanation}
@@ -681,7 +677,7 @@ function CaseStudyRenderer({ unitId, caseStudy, isCompleted, onComplete }: CaseS
 
   return (
     <div className="space-y-6">
-      
+
       {/* Background & Story */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-b border-white/5 pb-6">
         <div className="space-y-2.5 font-inter text-xs leading-relaxed text-white">
@@ -722,14 +718,14 @@ function CaseStudyRenderer({ unitId, caseStudy, isCompleted, onComplete }: CaseS
       <div className="space-y-4 pt-2">
         <span className="font-mono text-[10px] text-cyan-400 font-bold uppercase tracking-wider block">Interactive Review Question</span>
         <h4 className="text-sm font-semibold text-white font-inter">{caseStudy.question}</h4>
-        
+
         <div className="flex flex-col gap-2 font-inter text-xs">
           {caseStudy.options.map((opt, optIdx) => {
             const isSelected = selectedOpt === optIdx;
             const isCorrectAnswer = optIdx === caseStudy.correctAnswer;
-            
+
             let btnClass = "border-white/5 bg-white/[0.01] hover:bg-white/[0.03] text-on-surface-variant hover:text-white";
-            
+
             if (isSelected) {
               if (submitted) {
                 btnClass = isCorrectAnswer
@@ -759,11 +755,10 @@ function CaseStudyRenderer({ unitId, caseStudy, isCompleted, onComplete }: CaseS
           <motion.div
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`p-4 rounded-xl border font-inter text-xs leading-relaxed ${
-              isCorrect
+            className={`p-4 rounded-xl border font-inter text-xs leading-relaxed ${isCorrect
                 ? "border-emerald-500/25 bg-emerald-950/5 text-emerald-400/90"
                 : "border-red-500/25 bg-red-950/5 text-red-400/90"
-            }`}
+              }`}
           >
             <p className="font-bold uppercase font-mono tracking-wide text-[10px] mb-1">
               {isCorrect ? "Correct Explanation:" : "Incorrect Response:"}
@@ -830,21 +825,21 @@ interface ActivityProps {
 }
 
 function InteractiveActivityRenderer({ lessonId, onComplete, isCompleted }: ActivityProps) {
-  
+
   // Render specific layout based on lesson ID
   switch (lessonId) {
     case "lesson-1-1": // Password strength activity
       return <PasswordStrengthActivity onComplete={onComplete} isCompleted={isCompleted} />;
-    
+
     case "lesson-1-3": // Password generator activity
       return <PasswordGeneratorActivity onComplete={onComplete} isCompleted={isCompleted} />;
-    
+
     case "lesson-2-1": // Compare Emails activity
       return <CompareEmailsActivity onComplete={onComplete} isCompleted={isCompleted} />;
-    
+
     case "lesson-3-2": // Spot Fake Screenshots activity
       return <SpotFakeScreenshotsActivity onComplete={onComplete} isCompleted={isCompleted} />;
-    
+
     case "lesson-4-1": // Browser permissions review
       return <PermissionsAuditActivity onComplete={onComplete} isCompleted={isCompleted} />;
 
@@ -890,7 +885,7 @@ function PasswordStrengthActivity({ onComplete, isCompleted }: { onComplete: () 
     const hasLower = /[a-z]/.test(val);
     const hasDigit = /[0-9]/.test(val);
     const hasSpecial = /[^A-Za-z0-9]/.test(val);
-    
+
     const charSets = [hasUpper, hasLower, hasDigit, hasSpecial].filter(Boolean).length;
     points += charSets;
 
@@ -919,7 +914,7 @@ function PasswordStrengthActivity({ onComplete, isCompleted }: { onComplete: () 
     else if (points <= 6) timeStr = "4 Days";
     else if (points <= 7) timeStr = "45 Years";
     else timeStr = "Trillions of Years";
-    
+
     setCrackTime(timeStr);
 
     const passed = points >= 7;
@@ -989,18 +984,18 @@ function PasswordGeneratorActivity({ onComplete, isCompleted }: { onComplete: ()
   const generate = () => {
     // Generate secure passphrase from random word list
     const words = [
-      "sunset", "galaxy", "window", "river", "forest", "shadow", "winter", "summer", "autumn", 
+      "sunset", "galaxy", "window", "river", "forest", "shadow", "winter", "summer", "autumn",
       "spring", "whisper", "guitar", "castle", "bridge", "desert", "planet", "valley", "ocean",
       "pancake", "turtle", "journey", "blanket", "harvest", "compass", "diamond", "feather"
     ];
-    
+
     // Pick 4 random words
     const chosen: string[] = [];
     for (let i = 0; i < 4; i++) {
       const idx = Math.floor(Math.random() * words.length);
       chosen.push(words[idx]);
     }
-    
+
     const generated = chosen.join("-") + "-" + Math.floor(100 + Math.random() * 900);
     setPwd(generated);
   };
@@ -1087,16 +1082,16 @@ function CompareEmailsActivity({ onComplete, isCompleted: _isCompleted }: { onCo
 
   return (
     <div className="space-y-6">
-      
+
       {/* Side-by-Side Comparison */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        
+
         {/* Real Email (Left) */}
         <div className="border border-white/10 bg-cyber-bg/40 p-4 rounded-xl space-y-3 opacity-80">
           <div className="flex items-center gap-1.5 text-emerald-400 text-[10px] font-mono uppercase font-bold tracking-wider">
             <span>Email 1: Verified Official</span>
           </div>
-          
+
           <div className="space-y-1 font-mono text-[10px] text-on-surface-variant border-b border-white/5 pb-2">
             <div>From: PayPal Support &lt;support@paypal.com&gt;</div>
             <div>Subject: Your monthly PayPal account summary</div>
@@ -1109,50 +1104,45 @@ function CompareEmailsActivity({ onComplete, isCompleted: _isCompleted }: { onCo
         </div>
 
         {/* Fake Email (Right) */}
-        <div className={`border p-4 rounded-xl space-y-3 transition-all ${
-          selectedScam === "right" ? "border-cyan-400 bg-cyan-950/5" : "border-white/10 bg-cyber-bg/40"
-        }`} onClick={() => handleSelectScam("right")}>
+        <div className={`border p-4 rounded-xl space-y-3 transition-all ${selectedScam === "right" ? "border-cyan-400 bg-cyan-950/5" : "border-white/10 bg-cyber-bg/40"
+          }`} onClick={() => handleSelectScam("right")}>
           <div className="flex justify-between items-center">
             <span className="text-amber-400 text-[10px] font-mono uppercase font-bold tracking-wider">
               Email 2: Check for Scams
             </span>
             <span className="text-[10px] text-on-surface-variant font-mono">Click suspicious elements:</span>
           </div>
-          
+
           <div className="space-y-1.5 font-mono text-[10px] border-b border-white/5 pb-2">
-            <div 
+            <div
               onClick={(e) => { e.stopPropagation(); handleIndicatorClick("sender"); }}
-              className={`p-1 rounded cursor-pointer transition-colors ${
-                spottedIndicators.includes("sender") ? "bg-red-500/20 text-red-300 font-bold border border-red-500/40" : "hover:bg-white/5 text-on-surface-variant"
-              }`}
+              className={`p-1 rounded cursor-pointer transition-colors ${spottedIndicators.includes("sender") ? "bg-red-500/20 text-red-300 font-bold border border-red-500/40" : "hover:bg-white/5 text-on-surface-variant"
+                }`}
             >
               From: PayPal billing &lt;support@paypal-security.com&gt;
             </div>
-            <div 
+            <div
               onClick={(e) => { e.stopPropagation(); handleIndicatorClick("subject"); }}
-              className={`p-1 rounded cursor-pointer transition-colors ${
-                spottedIndicators.includes("subject") ? "bg-red-500/20 text-red-300 font-bold border border-red-500/40" : "hover:bg-white/5 text-on-surface-variant"
-              }`}
+              className={`p-1 rounded cursor-pointer transition-colors ${spottedIndicators.includes("subject") ? "bg-red-500/20 text-red-300 font-bold border border-red-500/40" : "hover:bg-white/5 text-on-surface-variant"
+                }`}
             >
               Subject: URGENT: Complete account verification to avoid lock
             </div>
           </div>
-          
+
           <div className="font-inter text-xs text-white leading-relaxed space-y-2">
             <p>Dear Customer,</p>
-            <p 
+            <p
               onClick={(e) => { e.stopPropagation(); handleIndicatorClick("grammar"); }}
-              className={`p-1 rounded cursor-pointer transition-colors ${
-                spottedIndicators.includes("grammar") ? "bg-red-500/20 text-red-300 font-bold border border-red-500/40" : "hover:bg-white/5"
-              }`}
+              className={`p-1 rounded cursor-pointer transition-colors ${spottedIndicators.includes("grammar") ? "bg-red-500/20 text-red-300 font-bold border border-red-500/40" : "hover:bg-white/5"
+                }`}
             >
               We was noticed suspicious connection from Eastern Europe. You must verified your account today.
             </p>
-            <p 
+            <p
               onClick={(e) => { e.stopPropagation(); handleIndicatorClick("link"); }}
-              className={`p-1 rounded cursor-pointer transition-colors ${
-                spottedIndicators.includes("link") ? "bg-red-500/20 text-red-300 font-bold border border-red-500/40" : "hover:bg-white/5 text-blue-400 underline"
-              }`}
+              className={`p-1 rounded cursor-pointer transition-colors ${spottedIndicators.includes("link") ? "bg-red-500/20 text-red-300 font-bold border border-red-500/40" : "hover:bg-white/5 text-blue-400 underline"
+                }`}
             >
               Click http://192.168.1.5/verify-paypal to login
             </p>
@@ -1230,7 +1220,7 @@ function SpotFakeScreenshotsActivity({ onComplete, isCompleted: _isCompleted }: 
         <span className="font-mono text-[9px] text-cyan-400 font-bold uppercase tracking-wider block">
           UPI Receipt Screenshot Auditor
         </span>
-        
+
         {/* Mock phone screen */}
         <div className="max-w-[280px] mx-auto border-4 border-white/20 rounded-[32px] p-4 bg-[#0A0D14] space-y-4 relative overflow-hidden select-none">
           <div className="flex justify-between items-center text-[10px] text-white/40 font-mono pb-2 border-b border-white/5">
@@ -1246,33 +1236,30 @@ function SpotFakeScreenshotsActivity({ onComplete, isCompleted: _isCompleted }: 
 
           <div className="space-y-3 font-mono text-[10px] border-t border-white/5 pt-3">
             {/* Font mismatch hotspot */}
-            <div 
+            <div
               onClick={() => handleSelect("font")}
-              className={`p-2 border rounded-lg cursor-pointer ${
-                clickedHotspot === "font" ? "border-cyan-400 bg-cyan-950/20" : "border-white/5 bg-white/[0.01]"
-              }`}
+              className={`p-2 border rounded-lg cursor-pointer ${clickedHotspot === "font" ? "border-cyan-400 bg-cyan-950/20" : "border-white/5 bg-white/[0.01]"
+                }`}
             >
               <div className="text-white/40">TXN ID:</div>
               <div className="text-cyan-300 font-sans text-xs tracking-wider">TXN9384029410384</div>
             </div>
 
             {/* Timestamp hotspot */}
-            <div 
+            <div
               onClick={() => handleSelect("timestamp")}
-              className={`p-2 border rounded-lg cursor-pointer ${
-                clickedHotspot === "timestamp" ? "border-cyan-400 bg-cyan-950/20" : "border-white/5 bg-white/[0.01]"
-              }`}
+              className={`p-2 border rounded-lg cursor-pointer ${clickedHotspot === "timestamp" ? "border-cyan-400 bg-cyan-950/20" : "border-white/5 bg-white/[0.01]"
+                }`}
             >
               <div className="text-white/40">Date:</div>
               <div className="text-white font-bold">03 Jul 2026, 03:45 PM</div>
             </div>
 
             {/* Balance hotspot */}
-            <div 
+            <div
               onClick={() => handleSelect("balance")}
-              className={`p-2 border rounded-lg cursor-pointer ${
-                clickedHotspot === "balance" ? "border-cyan-400 bg-cyan-950/20" : "border-white/5 bg-white/[0.01]"
-              }`}
+              className={`p-2 border rounded-lg cursor-pointer ${clickedHotspot === "balance" ? "border-cyan-400 bg-cyan-950/20" : "border-white/5 bg-white/[0.01]"
+                }`}
             >
               <div className="text-white/40">From:</div>
               <div className="text-white">HDFC Bank AC XX39</div>
@@ -1325,11 +1312,11 @@ function PermissionsAuditActivity({ onComplete, isCompleted: _isCompleted }: { o
   };
 
   const verify = () => {
-    const isCorrect = 
-      choices.flashlight === "deny" && 
-      choices.navigation === "allow" && 
+    const isCorrect =
+      choices.flashlight === "deny" &&
+      choices.navigation === "allow" &&
       choices.calculator === "deny";
-      
+
     if (isCorrect) {
       setChecked(true);
       onComplete();
@@ -1341,7 +1328,7 @@ function PermissionsAuditActivity({ onComplete, isCompleted: _isCompleted }: { o
   return (
     <div className="space-y-4">
       <div className="space-y-3 font-mono text-xs">
-        
+
         {/* Card 1: Flashlight app */}
         <div className="p-4 border border-white/5 bg-white/[0.01] rounded-xl flex items-center justify-between gap-4">
           <div>
@@ -1349,20 +1336,18 @@ function PermissionsAuditActivity({ onComplete, isCompleted: _isCompleted }: { o
             <span className="text-[10px] text-on-surface-variant">Requests: Contacts list & background location</span>
           </div>
           <div className="flex gap-2">
-            <button 
+            <button
               onClick={() => handleChoice("flashlight", "allow")}
-              className={`px-3 py-1.5 rounded-lg border text-[10px] ${
-                choices.flashlight === "allow" ? "border-red-500 bg-red-950/20 text-red-400 font-bold" : "border-white/5 bg-white/5 text-white/40"
-              }`}
+              className={`px-3 py-1.5 rounded-lg border text-[10px] ${choices.flashlight === "allow" ? "border-red-500 bg-red-950/20 text-red-400 font-bold" : "border-white/5 bg-white/5 text-white/40"
+                }`}
               disabled={checked}
             >
               ALLOW
             </button>
-            <button 
+            <button
               onClick={() => handleChoice("flashlight", "deny")}
-              className={`px-3 py-1.5 rounded-lg border text-[10px] ${
-                choices.flashlight === "deny" ? "border-emerald-500 bg-emerald-950/20 text-emerald-400 font-bold" : "border-white/5 bg-white/5 text-white/40"
-              }`}
+              className={`px-3 py-1.5 rounded-lg border text-[10px] ${choices.flashlight === "deny" ? "border-emerald-500 bg-emerald-950/20 text-emerald-400 font-bold" : "border-white/5 bg-white/5 text-white/40"
+                }`}
               disabled={checked}
             >
               DENY
@@ -1377,20 +1362,18 @@ function PermissionsAuditActivity({ onComplete, isCompleted: _isCompleted }: { o
             <span className="text-[10px] text-on-surface-variant">Requests: Active GPS location coordinates</span>
           </div>
           <div className="flex gap-2">
-            <button 
+            <button
               onClick={() => handleChoice("navigation", "allow")}
-              className={`px-3 py-1.5 rounded-lg border text-[10px] ${
-                choices.navigation === "allow" ? "border-emerald-500 bg-emerald-950/20 text-emerald-400 font-bold" : "border-white/5 bg-white/5 text-white/40"
-              }`}
+              className={`px-3 py-1.5 rounded-lg border text-[10px] ${choices.navigation === "allow" ? "border-emerald-500 bg-emerald-950/20 text-emerald-400 font-bold" : "border-white/5 bg-white/5 text-white/40"
+                }`}
               disabled={checked}
             >
               ALLOW
             </button>
-            <button 
+            <button
               onClick={() => handleChoice("navigation", "deny")}
-              className={`px-3 py-1.5 rounded-lg border text-[10px] ${
-                choices.navigation === "deny" ? "border-red-500 bg-red-950/20 text-red-400 font-bold" : "border-white/5 bg-white/5 text-white/40"
-              }`}
+              className={`px-3 py-1.5 rounded-lg border text-[10px] ${choices.navigation === "deny" ? "border-red-500 bg-red-950/20 text-red-400 font-bold" : "border-white/5 bg-white/5 text-white/40"
+                }`}
               disabled={checked}
             >
               DENY
@@ -1405,20 +1388,18 @@ function PermissionsAuditActivity({ onComplete, isCompleted: _isCompleted }: { o
             <span className="text-[10px] text-on-surface-variant">Requests: Storage folder & microphone access</span>
           </div>
           <div className="flex gap-2">
-            <button 
+            <button
               onClick={() => handleChoice("calculator", "allow")}
-              className={`px-3 py-1.5 rounded-lg border text-[10px] ${
-                choices.calculator === "allow" ? "border-red-500 bg-red-950/20 text-red-400 font-bold" : "border-white/5 bg-white/5 text-white/40"
-              }`}
+              className={`px-3 py-1.5 rounded-lg border text-[10px] ${choices.calculator === "allow" ? "border-red-500 bg-red-950/20 text-red-400 font-bold" : "border-white/5 bg-white/5 text-white/40"
+                }`}
               disabled={checked}
             >
               ALLOW
             </button>
-            <button 
+            <button
               onClick={() => handleChoice("calculator", "deny")}
-              className={`px-3 py-1.5 rounded-lg border text-[10px] ${
-                choices.calculator === "deny" ? "border-emerald-500 bg-emerald-950/20 text-emerald-400 font-bold" : "border-white/5 bg-white/5 text-white/40"
-              }`}
+              className={`px-3 py-1.5 rounded-lg border text-[10px] ${choices.calculator === "deny" ? "border-emerald-500 bg-emerald-950/20 text-emerald-400 font-bold" : "border-white/5 bg-white/5 text-white/40"
+                }`}
               disabled={checked}
             >
               DENY
@@ -1429,9 +1410,9 @@ function PermissionsAuditActivity({ onComplete, isCompleted: _isCompleted }: { o
       </div>
 
       {!checked ? (
-        <Button 
-          variant="action" 
-          className="w-full mt-2" 
+        <Button
+          variant="action"
+          className="w-full mt-2"
           onClick={verify}
           disabled={Object.values(choices).some(v => v === null)}
         >
@@ -1453,7 +1434,7 @@ function GenericChecklistActivity({ onComplete, isCompleted }: { onComplete: () 
       <div className="p-4 border border-cyan-400/20 bg-cyan-950/5 rounded-xl font-inter text-xs text-on-surface-variant leading-relaxed">
         To complete this activity, verify you have audited this configuration or read the checklist criteria carefully.
       </div>
-      
+
       {!isCompleted ? (
         <Button variant="action" className="w-full" onClick={onComplete}>
           Verify Audit & Proceed
