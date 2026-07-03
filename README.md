@@ -57,6 +57,4 @@ The goal is simple:
 
 ---
 
----
-
 If you have suggestions, ideas, or feedback, I'd be happy to hear them. Every contribution helps make SafeSteps more useful for future learners.
