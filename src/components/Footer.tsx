@@ -6,13 +6,13 @@ import { motion } from "framer-motion";
 export default function Footer() {
   return (
     <motion.footer
-      initial={{ opacity: 0, y: 15 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="border-t border-white/5 bg-cyber-bg py-12 mt-auto font-mono text-[12px] text-on-surface-variant"
+      className="border-t border-white/5 bg-cyber-bg py-16 mt-auto text-on-surface-variant font-inter"
     >
-      <div className="max-w-[1440px] mx-auto px-4 md:px-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8">
+      <div className="max-w-6xl mx-auto px-6 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
 
         {/* Column 1: Slogan & Statement */}
         <div className="md:col-span-4 space-y-4">
@@ -26,125 +26,98 @@ export default function Footer() {
               Safe<span className="text-cyan-400">Steps</span>
             </span>
           </div>
-
-          <div className="space-y-2 font-inter text-xs">
-            <p className="text-on-surface-variant leading-relaxed">
-              SafeSteps is an educational project created to promote digital safety through practical learning, interactive activities, and community awareness.
-            </p>
-          </div>
+          <p className="text-on-surface-variant text-xs leading-relaxed max-w-sm">
+            An educational project created to promote digital safety through practical learning, interactive activities, and community awareness.
+          </p>
         </div>
 
         {/* Column 2: Quick Navigation */}
-        <div className="md:col-span-2 space-y-3">
-          <h4 className="font-outfit text-xs font-bold text-white uppercase tracking-widest border-b border-white/5 pb-1">
+        <div className="md:col-span-2 md:col-start-6 space-y-3.5">
+          <h4 className="font-mono text-[10px] font-bold text-cyan-400 uppercase tracking-widest">
             Navigation
           </h4>
-          <ul className="space-y-2">
+          <ul className="space-y-2 text-xs">
             <li>
-              <Link href="/" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
-                &gt; Home
+              <Link href="/" className="hover:text-cyan-400 transition-colors duration-200 block">
+                Home
               </Link>
             </li>
             <li>
-              <Link href="/learn" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
-                &gt; Learn
+              <Link href="/learn" className="hover:text-cyan-400 transition-colors duration-200 block">
+                Learn
               </Link>
             </li>
             <li>
-              <Link href="/community" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
-                &gt; Community
+              <Link href="/community" className="hover:text-cyan-400 transition-colors duration-200 block">
+                Community
               </Link>
             </li>
             <li>
-              <Link href="/profile" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
-                &gt; Profile
+              <Link href="/profile" className="hover:text-cyan-400 transition-colors duration-200 block">
+                Profile
               </Link>
             </li>
             <li>
-              <Link href="/support" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
-                &gt; Support
+              <Link href="/support" className="hover:text-cyan-400 transition-colors duration-200 block">
+                Support
               </Link>
             </li>
           </ul>
         </div>
 
         {/* Column 3: Learning Units */}
-        <div className="md:col-span-2 space-y-3">
-          <h4 className="font-outfit text-xs font-bold text-white uppercase tracking-widest border-b border-white/5 pb-1">
+        <div className="md:col-span-3 space-y-3.5">
+          <h4 className="font-mono text-[10px] font-bold text-cyan-400 uppercase tracking-widest">
             Learning Units
           </h4>
-          <ul className="space-y-1.5 text-on-surface-variant font-mono text-[11px]">
+          <ul className="space-y-2 text-xs">
             <li>
-              <Link href="/learn?unit=unit-1" className="hover:text-cyan-400 transition-colors">
-                • Unit 1: Basics
+              <Link href="/learn?unit=unit-1" className="hover:text-cyan-400 transition-colors duration-200 block">
+                Unit 1: Password Security
               </Link>
             </li>
             <li>
-              <Link href="/learn?unit=unit-2" className="hover:text-cyan-400 transition-colors">
-                • Unit 2: Email
+              <Link href="/learn?unit=unit-2" className="hover:text-cyan-400 transition-colors duration-200 block">
+                Unit 2: Email Scams
               </Link>
             </li>
             <li>
-              <Link href="/learn?unit=unit-3" className="hover:text-cyan-400 transition-colors">
-                • Unit 3: Payments
+              <Link href="/learn?unit=unit-3" className="hover:text-cyan-400 transition-colors duration-200 block">
+                Unit 3: Online Payments
               </Link>
             </li>
             <li>
-              <Link href="/learn?unit=unit-4" className="hover:text-cyan-400 transition-colors">
-                • Unit 4: Privacy
+              <Link href="/learn?unit=unit-4" className="hover:text-cyan-400 transition-colors duration-200 block">
+                Unit 4: App Privacy
               </Link>
             </li>
             <li>
-              <Link href="/learn?unit=unit-5" className="hover:text-cyan-400 transition-colors">
-                • Unit 5: Social
+              <Link href="/learn?unit=unit-5" className="hover:text-cyan-400 transition-colors duration-200 block">
+                Unit 5: Social Scams
               </Link>
             </li>
             <li>
-              <Link href="/learn?unit=unit-6" className="hover:text-cyan-400 transition-colors">
-                • Unit 6: Device
-              </Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Column 4: Resources */}
-        <div className="md:col-span-2 space-y-3">
-          <h4 className="font-outfit text-xs font-bold text-white uppercase tracking-widest border-b border-white/5 pb-1">
-            Resources
-          </h4>
-          <ul className="space-y-2">
-            <li>
-              <Link href="/support" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
-                &gt; Glossary
-              </Link>
-            </li>
-            <li>
-              <Link href="/support" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
-                &gt; Helplines
-              </Link>
-            </li>
-            <li>
-              <Link href="/support" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
-                &gt; Feedbacks
+              <Link href="/learn?unit=unit-6" className="hover:text-cyan-400 transition-colors duration-200 block">
+                Unit 6: Device Safety
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* Column 5: Project Info */}
-        <div className="md:col-span-2 space-y-3">
-          <h4 className="font-outfit text-xs font-bold text-white uppercase tracking-widest border-b border-white/5 pb-1">
+        {/* Column 4: Project Info */}
+        <div className="md:col-span-2 space-y-3.5">
+          <h4 className="font-mono text-[10px] font-bold text-cyan-400 uppercase tracking-widest">
             Project Info
           </h4>
-          <ul className="space-y-2">
+          <ul className="space-y-2 text-xs">
             <li>
               <a
                 href="https://github.com/utkarshsingh3011/SafeSteps-Platform"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block"
+                className="hover:text-cyan-400 transition-colors duration-200 block"
               >
-                &gt; GitHub Repo
+                GitHub
               </a>
             </li>
             <li>
@@ -152,9 +125,9 @@ export default function Footer() {
                 href="https://www.linkedin.com/in/utkarshsingh3011"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block"
+                className="hover:text-cyan-400 transition-colors duration-200 block"
               >
-                &gt; LinkedIn
+                LinkedIn
               </a>
             </li>
           </ul>
@@ -163,13 +136,10 @@ export default function Footer() {
       </div>
 
       {/* Internship Project Label */}
-      <div className="max-w-[1440px] mx-auto px-4 md:px-10 mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/40">
-        <div className="flex items-center gap-1.5 font-inter">
-          <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping" />
-          <span>B.Tech ECE Student Internship Project</span>
-        </div>
-        <div className="font-inter">
-          Developed by <span className="text-white/60 font-semibold">Utkarsh Singh</span>
+      <div className="max-w-6xl mx-auto px-6 md:px-8 mt-12 pt-6 border-t border-white/5 flex justify-center text-[10px] text-white/30 tracking-wider">
+        <div className="flex items-center gap-2 font-mono">
+          <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
+          <span>STUDENT INTERNSHIP PROJECT</span>
         </div>
       </div>
     </motion.footer>
