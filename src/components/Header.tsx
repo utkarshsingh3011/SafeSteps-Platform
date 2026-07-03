@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Shield, UserCheck, Menu, X, ArrowRight, LogOut, User } from "lucide-react";
+import { Menu, X, ArrowRight, LogOut, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "./AuthProvider";
 
@@ -14,8 +14,9 @@ export default function Header() {
 
   const navItems = [
     { label: "Home", href: "/" },
-    { label: "Safety Checks", href: "/safety-checks" },
-    { label: "Learning Hub", href: "/learning-hub" },
+    { label: "Learn", href: "/learn" },
+    { label: "Community", href: "/community" },
+    { label: "Profile", href: "/profile" },
     { label: "Support", href: "/support" },
   ];
 
@@ -88,10 +89,10 @@ export default function Header() {
 
           {/* Start Check Action */}
           <Link
-            href="/safety-checks"
+            href="/learn"
             className="hidden sm:flex items-center gap-1.5 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-black px-5 py-2 text-xs font-bold rounded-full transition-all uppercase hover:shadow-md"
           >
-            Safety Checkups
+            Start Learning
           </Link>
 
           {/* Logout button */}
@@ -158,11 +159,11 @@ export default function Header() {
               
               {/* Mobile CTA */}
               <Link
-                href="/safety-checks"
+                href="/learn"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-black py-2.5 text-xs font-bold rounded-full transition-all uppercase mt-2"
               >
-                <span>Safety Checkups</span>
+                <span>Start Learning</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
 

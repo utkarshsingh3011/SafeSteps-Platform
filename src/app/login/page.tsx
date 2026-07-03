@@ -88,7 +88,7 @@ export default function LoginPage() {
               Safe<span className="text-cyan-400">Steps</span> Login
             </h2>
             <p className="text-[13px] text-cyan-400 font-medium font-inter max-w-[280px] mx-auto leading-relaxed italic">
-              "Build safer digital habits. One lesson at a time."
+              &quot;Build safer digital habits. One lesson at a time.&quot;
             </p>
           </div>
         </div>

@@ -2,40 +2,46 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Award, ArrowLeft, Printer, Shield, CheckCircle, Check, Key, Search, EyeOff, Lock } from "lucide-react";
+import { Award, ArrowLeft, Printer, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/components/AuthProvider";
-import { getCompletedChecks, getCompletedLessons, calculateSafetyScore } from "@/components/ProgressTracker";
+import {
+  getCompletedQuizzes,
+  getCompletedCases
+} from "@/components/ProgressTracker";
 import Button from "@/components/Button";
 
 export default function CertificatePage() {
-  const router = useRouter();
   const { user, isGuest } = useAuth();
   const [isCompleted, setIsCompleted] = useState(false);
   const [dateString, setDateString] = useState("");
 
   useEffect(() => {
-    const checks = getCompletedChecks();
-    const allChecksDone = Object.values(checks).every(Boolean);
-    const lessons = getCompletedLessons();
-    const lessonCount = Object.values(lessons).filter(Boolean).length;
-    setIsCompleted(allChecksDone && lessonCount >= 10);
+    const quizzes = getCompletedQuizzes();
+    const cases = getCompletedCases();
+    const quizCount = Object.values(quizzes).filter(Boolean).length;
+    const caseCount = Object.values(cases).filter(Boolean).length;
     
-    // Set formatted date
+    // Unlocks when all 14 quizzes and 6 case studies are cleared
+    const checkVal = quizCount >= 14 && caseCount >= 6;
     const today = new Date();
-    setDateString(today.toLocaleDateString("en-US", {
+    const formattedDate = today.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric"
-    }));
+    });
+
+    setTimeout(() => {
+      setIsCompleted(checkVal);
+      setDateString(formattedDate);
+    }, 0);
   }, []);
 
   const handlePrint = () => {
     window.print();
   };
 
-  const name = user ? user.name : isGuest ? "Welcome!" : "Learner";
+  const name = user ? user.name : isGuest ? "Guest Learner" : "Learner";
 
   if (!isCompleted) {
     return (
@@ -47,7 +53,7 @@ export default function CertificatePage() {
         <div className="space-y-2 max-w-md">
           <h2 className="font-outfit text-2xl font-bold text-white">Certificate Locked</h2>
           <p className="text-sm text-on-surface-variant leading-relaxed font-inter">
-            To unlock your official SafeSteps Certificate of Completion, you must successfully complete all 4 safety checks (Password Checkup, Scam Spotter Game, Privacy Quiz, and Browser Health Check) and study all 10 curriculum lessons in the Learning Hub.
+            To unlock your official SafeSteps Certificate of Completion, you must successfully complete all 14 curriculum lessons (quizzes and activities) and solve all 6 unit Case Studies on the Learn page.
           </p>
         </div>
 
@@ -166,7 +172,7 @@ export default function CertificatePage() {
           </div>
 
           <div className="max-w-xl mx-auto text-xs text-on-surface-variant font-inter leading-relaxed print:text-slate-700">
-            For successfully studying, auditing, and securing personal device postures across all core SafeSteps units: Password Health Check, Spot the Scam simulation, Privacy Settings Review, and Browser Configuration checkups.
+            For successfully studying, auditing, and mastering device security and online safety policies across all 6 core SafeSteps units: Digital Safety Basics, Email Security, Safe Payments, Privacy Posture, Social Media Safety, and Device Security.
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-white/5 max-w-lg mx-auto print:border-slate-200">
@@ -175,8 +181,8 @@ export default function CertificatePage() {
             <div className="text-left font-mono text-[10px] space-y-1">
               <div className="text-on-surface-variant uppercase">COMPLETION DATE:</div>
               <div className="text-white font-bold print:text-slate-900">{dateString}</div>
-              <div className="text-on-surface-variant uppercase mt-2">UNITS COMPLETED:</div>
-              <div className="text-white font-bold print:text-slate-900">4 / 4 Safety Modules</div>
+              <div className="text-on-surface-variant uppercase mt-2">CURRICULUM SYLLABUS:</div>
+              <div className="text-white font-bold print:text-slate-900">6 Units / 14 Lessons</div>
             </div>
 
             {/* Signature stamp */}
@@ -236,7 +242,7 @@ export default function CertificatePage() {
               <table className="w-full text-left font-mono text-[11px] text-on-surface-variant border-collapse">
                 <thead>
                   <tr className="border-b border-white/5 bg-white/5 text-white">
-                    <th className="p-3">Safety Module</th>
+                    <th className="p-3">Safety Unit</th>
                     <th className="p-3 text-center">Status</th>
                     <th className="p-3 text-center">Score</th>
                     <th className="p-3">Postural Assessment</th>
@@ -244,40 +250,52 @@ export default function CertificatePage() {
                 </thead>
                 <tbody>
                   <tr className="border-b border-white/5">
-                    <td className="p-3 font-bold text-white flex items-center gap-2">
-                      <Key className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>Password Health</span>
+                    <td className="p-3 font-bold text-white">
+                      Unit 1: Digital Safety Basics
                     </td>
                     <td className="p-3 text-center text-emerald-400 font-bold">✓ PASS</td>
                     <td className="p-3 text-center text-white">100%</td>
-                    <td className="p-3 text-xs font-inter">Secure length and entropy metrics verified.</td>
+                    <td className="p-3 text-xs font-inter">Secure passphrase length and MFA locks verified.</td>
                   </tr>
                   <tr className="border-b border-white/5">
-                    <td className="p-3 font-bold text-white flex items-center gap-2">
-                      <Search className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>Scam Awareness</span>
+                    <td className="p-3 font-bold text-white">
+                      Unit 2: Email Security
                     </td>
                     <td className="p-3 text-center text-emerald-400 font-bold">✓ PASS</td>
                     <td className="p-3 text-center text-white">100%</td>
-                    <td className="p-3 text-xs font-inter">Phishing indicators successfully spotted.</td>
+                    <td className="p-3 text-xs font-inter">Phishing clues spotted and attachments scanned.</td>
                   </tr>
                   <tr className="border-b border-white/5">
-                    <td className="p-3 font-bold text-white flex items-center gap-2">
-                      <EyeOff className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>Privacy Posture</span>
+                    <td className="p-3 font-bold text-white">
+                      Unit 3: Safe Payments
                     </td>
                     <td className="p-3 text-center text-emerald-400 font-bold">✓ PASS</td>
                     <td className="p-3 text-center text-white">100%</td>
-                    <td className="p-3 text-xs font-inter">Hardware sensors and social permissions audited.</td>
+                    <td className="p-3 text-xs font-inter">UPI scams avoided and screenshots audited.</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="p-3 font-bold text-white">
+                      Unit 4: Privacy Posture
+                    </td>
+                    <td className="p-3 text-center text-emerald-400 font-bold">✓ PASS</td>
+                    <td className="p-3 text-center text-white">100%</td>
+                    <td className="p-3 text-xs font-inter">Browser cookie settings and telemetry checks cleared.</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="p-3 font-bold text-white">
+                      Unit 5: Social Media Safety
+                    </td>
+                    <td className="p-3 text-center text-emerald-400 font-bold">✓ PASS</td>
+                    <td className="p-3 text-center text-white">100%</td>
+                    <td className="p-3 text-xs font-inter">Profile visibility locked and mining traps avoided.</td>
                   </tr>
                   <tr>
-                    <td className="p-3 font-bold text-white flex items-center gap-2">
-                      <Shield className="w-3.5 h-3.5 text-cyan-400" />
-                      <span>Browser Security</span>
+                    <td className="p-3 font-bold text-white">
+                      Unit 6: Device Security
                     </td>
                     <td className="p-3 text-center text-emerald-400 font-bold">✓ PASS</td>
                     <td className="p-3 text-center text-white">100%</td>
-                    <td className="p-3 text-xs font-inter">Verified HTTPS connection cookies posture.</td>
+                    <td className="p-3 text-xs font-inter">System updates verified and sideloading audited.</td>
                   </tr>
                 </tbody>
               </table>
@@ -304,7 +322,7 @@ export default function CertificatePage() {
               <div className="text-on-surface-variant uppercase">AUDITED BY:</div>
               <div className="text-white font-bold print:text-slate-900">SafeSteps Analyzer Suite</div>
               <div className="text-on-surface-variant uppercase mt-2">VERIFICATION ID:</div>
-              <div className="text-white font-bold print:text-slate-900">SFSTP-100-VERIFIED</div>
+              <div className="text-white font-bold print:text-slate-900">SFSTP-200-GRADUATE</div>
             </div>
             
             <div className="text-right flex flex-col items-end justify-center font-mono">

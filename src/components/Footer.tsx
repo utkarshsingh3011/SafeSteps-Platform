@@ -4,8 +4,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
     <motion.footer
       initial={{ opacity: 0, y: 15 }}
@@ -16,86 +14,127 @@ export default function Footer() {
     >
       <div className="max-w-[1440px] mx-auto px-4 md:px-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8">
 
-        {/* Column 1: Info & Slogan */}
-        <div className="md:col-span-3 space-y-4">
+        {/* Column 1: Slogan & Statement */}
+        <div className="md:col-span-4 space-y-4">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 border border-emerald-500/30 flex items-center justify-center bg-emerald-950/20 rounded-[4px]">
-              <svg className="w-3.5 h-3.5 text-emerald-400 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+            <div className="w-6 h-6 border border-cyan-400/30 flex items-center justify-center bg-cyan-950/20 rounded-[4px]">
+              <svg className="w-3.5 h-3.5 text-cyan-400 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
             </div>
-            <span className="font-outfit text-base font-bold text-white tracking-tight hover:text-emerald-400 transition-colors duration-300">
-              Safe<span className="text-emerald-400">Steps</span>
+            <span className="font-outfit text-base font-bold text-white tracking-tight hover:text-cyan-400 transition-colors duration-300">
+              Safe<span className="text-cyan-400">Steps</span>
             </span>
           </div>
 
           <div className="space-y-2 font-inter text-xs">
-            <p className="text-white font-outfit font-semibold text-xs tracking-wide uppercase">
-              Learn. Practice. Understand.
-            </p>
             <p className="text-on-surface-variant leading-relaxed">
-              An interactive educational project developed during our internship to help students build practical digital safety awareness through hands-on activities.
+              SafeSteps is an educational project created to promote digital safety through practical learning, interactive activities, and community awareness.
             </p>
           </div>
         </div>
 
-        {/* Column 2: Quick Links */}
+        {/* Column 2: Quick Navigation */}
         <div className="md:col-span-2 space-y-3">
           <h4 className="font-outfit text-xs font-bold text-white uppercase tracking-widest border-b border-white/5 pb-1">
-            Quick Links
+            Navigation
           </h4>
           <ul className="space-y-2">
             <li>
-              <Link href="/" className="hover:text-emerald-400 hover:pl-1 transition-all duration-200 block">
+              <Link href="/" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
                 &gt; Home
               </Link>
             </li>
             <li>
-              <Link href="/learning-hub" className="hover:text-emerald-400 hover:pl-1 transition-all duration-200 block">
-                &gt; Learning Hub
+              <Link href="/learn" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
+                &gt; Learn
               </Link>
             </li>
             <li>
-              <Link href="/safety-checks" className="hover:text-emerald-400 hover:pl-1 transition-all duration-200 block">
-                &gt; Safety Checks
+              <Link href="/community" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
+                &gt; Community
               </Link>
             </li>
             <li>
-              <Link href="/support" className="hover:text-emerald-400 hover:pl-1 transition-all duration-200 block">
+              <Link href="/profile" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
+                &gt; Profile
+              </Link>
+            </li>
+            <li>
+              <Link href="/support" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
                 &gt; Support
               </Link>
             </li>
           </ul>
         </div>
 
-        {/* Column 3: Educational Note */}
-        <div className="md:col-span-3 space-y-3">
-          <h4 className="font-outfit text-xs font-bold text-white uppercase tracking-widest border-b border-white/5 pb-1">
-            Educational Note
-          </h4>
-          <p className="font-inter text-xs text-on-surface-variant leading-relaxed">
-            This project is intended for cybersecurity education and awareness. No real attacks or real operations are performed.
-          </p>
-        </div>
-
-        {/* Column 4: Built Using */}
+        {/* Column 3: Learning Units */}
         <div className="md:col-span-2 space-y-3">
           <h4 className="font-outfit text-xs font-bold text-white uppercase tracking-widest border-b border-white/5 pb-1">
-            Built Using
+            Learning Units
           </h4>
-          <ul className="space-y-1 text-on-surface-variant font-mono text-[11px]">
-            <li>• Next.js</li>
-            <li>• React</li>
-            <li>• TypeScript</li>
-            <li>• Tailwind CSS</li>
-            <li>• Framer Motion</li>
+          <ul className="space-y-1.5 text-on-surface-variant font-mono text-[11px]">
+            <li>
+              <Link href="/learn?unit=unit-1" className="hover:text-cyan-400 transition-colors">
+                • Unit 1: Basics
+              </Link>
+            </li>
+            <li>
+              <Link href="/learn?unit=unit-2" className="hover:text-cyan-400 transition-colors">
+                • Unit 2: Email
+              </Link>
+            </li>
+            <li>
+              <Link href="/learn?unit=unit-3" className="hover:text-cyan-400 transition-colors">
+                • Unit 3: Payments
+              </Link>
+            </li>
+            <li>
+              <Link href="/learn?unit=unit-4" className="hover:text-cyan-400 transition-colors">
+                • Unit 4: Privacy
+              </Link>
+            </li>
+            <li>
+              <Link href="/learn?unit=unit-5" className="hover:text-cyan-400 transition-colors">
+                • Unit 5: Social
+              </Link>
+            </li>
+            <li>
+              <Link href="/learn?unit=unit-6" className="hover:text-cyan-400 transition-colors">
+                • Unit 6: Device
+              </Link>
+            </li>
           </ul>
         </div>
 
-        {/* Column 5: Connect */}
+        {/* Column 4: Resources */}
         <div className="md:col-span-2 space-y-3">
           <h4 className="font-outfit text-xs font-bold text-white uppercase tracking-widest border-b border-white/5 pb-1">
-            Connect
+            Resources
+          </h4>
+          <ul className="space-y-2">
+            <li>
+              <Link href="/support" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
+                &gt; Glossary
+              </Link>
+            </li>
+            <li>
+              <Link href="/support" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
+                &gt; Helplines
+              </Link>
+            </li>
+            <li>
+              <Link href="/support" className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block">
+                &gt; Feedbacks
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Column 5: Project Info */}
+        <div className="md:col-span-2 space-y-3">
+          <h4 className="font-outfit text-xs font-bold text-white uppercase tracking-widest border-b border-white/5 pb-1">
+            Project Info
           </h4>
           <ul className="space-y-2">
             <li>
@@ -103,7 +142,7 @@ export default function Footer() {
                 href="https://github.com/utkarshsingh3011/SafeSteps-Platform"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-emerald-400 hover:pl-1 transition-all duration-200 block"
+                className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block"
               >
                 &gt; GitHub Repo
               </a>
@@ -113,7 +152,7 @@ export default function Footer() {
                 href="https://www.linkedin.com/in/utkarshsingh3011"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-emerald-400 hover:pl-1 transition-all duration-200 block"
+                className="hover:text-cyan-400 hover:pl-1 transition-all duration-200 block"
               >
                 &gt; LinkedIn
               </a>
@@ -126,11 +165,11 @@ export default function Footer() {
       {/* Internship Project Label */}
       <div className="max-w-[1440px] mx-auto px-4 md:px-10 mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/40">
         <div className="flex items-center gap-1.5 font-inter">
-          <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
-          <span>Developed as an Internship Project</span>
+          <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping" />
+          <span>B.Tech ECE Student Internship Project</span>
         </div>
         <div className="font-inter">
-          Focused on <span className="text-white/60 font-semibold">Digital Safety Education</span>
+          Developed by <span className="text-white/60 font-semibold">Utkarsh Singh</span>
         </div>
       </div>
     </motion.footer>

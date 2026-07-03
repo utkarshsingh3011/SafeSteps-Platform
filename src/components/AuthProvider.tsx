@@ -71,27 +71,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     const session = localStorage.getItem("safesteps_session");
-    if (session) {
-      if (session === "guest") {
-        setIsGuest(true);
-        loadGuestProgress();
-      } else {
-        const users = JSON.parse(localStorage.getItem("safesteps_users") || "{}");
-        const found = users[session];
-        if (found) {
-          setUser(found);
-          loadUserProgress(found);
-          updateStreak(session, found);
+    setTimeout(() => {
+      if (session) {
+        if (session === "guest") {
+          setIsGuest(true);
+          loadGuestProgress();
         } else {
-          localStorage.removeItem("safesteps_session");
+          const users = JSON.parse(localStorage.getItem("safesteps_users") || "{}");
+          const found = users[session];
+          if (found) {
+            setUser(found);
+            loadUserProgress(found);
+            updateStreak(session, found);
+          } else {
+            localStorage.removeItem("safesteps_session");
+          }
         }
       }
-    }
-    setIsLoading(false);
+      setIsLoading(false);
+    }, 0);
   }, []);
 
   // Update streak if last active day was yesterday or today
-  const updateStreak = (email: string, profile: UserProfile) => {
+  function updateStreak(email: string, profile: UserProfile) {
     const today = new Date().toISOString().split("T")[0];
     if (profile.lastActive === today) return;
 
@@ -117,7 +119,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     users[email] = updated;
     localStorage.setItem("safesteps_users", JSON.stringify(users));
     setUser(updated);
-  };
+  }
 
   // Sync back local progress modifications to current active profile
   useEffect(() => {
@@ -126,18 +128,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const syncProgress = () => {
       const checksData = localStorage.getItem("safesteps_completed_checks");
       const lessonsData = localStorage.getItem("safesteps_completed_lessons");
+      const activitiesData = localStorage.getItem("safesteps_completed_activities");
+      const quizzesData = localStorage.getItem("safesteps_completed_quizzes");
+      const casesData = localStorage.getItem("safesteps_completed_cases");
       const supportData = localStorage.getItem("safesteps_support_completed") === "true";
       const achievementsData = JSON.parse(localStorage.getItem("safesteps_achievements") || "[]");
 
       const checks = checksData ? JSON.parse(checksData) : { password: false, scam: false, privacy: false, browser: false };
       const lessons = lessonsData ? JSON.parse(lessonsData) : {};
+      const activities = activitiesData ? JSON.parse(activitiesData) : {};
+      const quizzes = quizzesData ? JSON.parse(quizzesData) : {};
+      const cases = casesData ? JSON.parse(casesData) : {};
 
-      let achievements = [...achievementsData];
+      const constAchievements = [...achievementsData];
       let achievementsChanged = false;
 
       const unlock = (id: string) => {
-        if (!achievements.includes(id)) {
-          achievements.push(id);
+        if (!constAchievements.includes(id)) {
+          constAchievements.push(id);
           achievementsChanged = true;
           setTimeout(() => {
             window.dispatchEvent(new CustomEvent("safesteps_achievement_unlocked", { detail: { id } }));
@@ -145,60 +153,66 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       };
 
-      if (checks.password) unlock("password-protector");
-      if (checks.scam) unlock("scam-spotter");
-      if (checks.privacy) unlock("privacy-explorer");
-      if (checks.browser) unlock("browser-hygiene");
-      if (checks.password && checks.scam && checks.privacy && checks.browser) {
-        unlock("safesteps-graduate");
+      // v2.0 Badge Rules
+      const quizCount = Object.keys(quizzes).filter(k => quizzes[k]).length;
+      if (quizCount >= 1) unlock("first-lesson");
+      if (activities["lesson-1-1"] && activities["lesson-1-3"]) unlock("password-defender");
+      if (activities["lesson-2-1"]) unlock("phishing-detective");
+      if (quizzes["lesson-4-1"] && quizzes["lesson-4-2"]) unlock("privacy-explorer");
+      if (quizCount >= 5) unlock("quiz-master");
+      
+      const caseCount = Object.keys(cases).filter(k => cases[k]).length;
+      if (caseCount >= 1) unlock("case-study-solver");
+      
+      const totalLessons = 14;
+      const actCount = Object.keys(activities).filter(k => activities[k]).length;
+      if (quizCount >= totalLessons && actCount >= totalLessons && caseCount >= 6) {
+        unlock("learner-30");
       }
-
-      const lessonsKeys = Object.keys(lessons).filter((k) => lessons[k]);
-      if (lessonsKeys.length > 0) unlock("first-lesson");
-      if (lessonsKeys.length === 7) unlock("weekly-learner");
 
       if (isGuest) {
         // Save guest progress
-        const guestProgress = { checks, lessons, support: supportData, achievements };
+        const guestProgress = { checks, lessons, support: supportData, achievements: constAchievements };
         localStorage.setItem("safesteps_guest_progress", JSON.stringify(guestProgress));
         if (achievementsChanged) {
-          localStorage.setItem("safesteps_achievements", JSON.stringify(achievements));
+          localStorage.setItem("safesteps_achievements", JSON.stringify(constAchievements));
         }
       } else if (user) {
         // Save logged in user progress
         const users = JSON.parse(localStorage.getItem("safesteps_users") || "{}");
         const profile = users[user.email];
         if (profile) {
-          // Log activities
+          // Log activities dynamically
           let activityLogged = false;
+          
           if (checks.password && !profile.checks.password) {
-            profile.recentActivity = [{ time: "Just now", action: "Completed Password Health Check" }, ...profile.recentActivity.slice(0, 7)];
+            profile.recentActivity = [{ time: "Just now", action: "Passed Password Security quiz" }, ...profile.recentActivity.slice(0, 7)];
             activityLogged = true;
           }
           if (checks.scam && !profile.checks.scam) {
-            profile.recentActivity = [{ time: "Just now", action: "Spot the Scam Simulation Cleared" }, ...profile.recentActivity.slice(0, 7)];
+            profile.recentActivity = [{ time: "Just now", action: "Spotted Phishing Clues activity" }, ...profile.recentActivity.slice(0, 7)];
             activityLogged = true;
           }
           if (checks.privacy && !profile.checks.privacy) {
-            profile.recentActivity = [{ time: "Just now", action: "Completed Privacy Health Review" }, ...profile.recentActivity.slice(0, 7)];
+            profile.recentActivity = [{ time: "Just now", action: "Audited Device App Permissions" }, ...profile.recentActivity.slice(0, 7)];
             activityLogged = true;
           }
           if (checks.browser && !profile.checks.browser) {
-            profile.recentActivity = [{ time: "Just now", action: "Completed Browser Safety Review" }, ...profile.recentActivity.slice(0, 7)];
+            profile.recentActivity = [{ time: "Just now", action: "Completed Browser Privacy Audit" }, ...profile.recentActivity.slice(0, 7)];
             activityLogged = true;
           }
 
           profile.checks = checks;
           profile.lessons = lessons;
           profile.support = supportData;
-          profile.achievements = achievements;
+          profile.achievements = constAchievements;
           
           users[user.email] = profile;
           localStorage.setItem("safesteps_users", JSON.stringify(users));
           setUser(profile);
           
           if (achievementsChanged || activityLogged) {
-            localStorage.setItem("safesteps_achievements", JSON.stringify(achievements));
+            localStorage.setItem("safesteps_achievements", JSON.stringify(constAchievements));
           }
         }
       }
@@ -210,15 +224,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, [user, isGuest, isLoading]);
 
-  const loadUserProgress = (profile: UserProfile) => {
+  function loadUserProgress(profile: UserProfile) {
     localStorage.setItem("safesteps_completed_checks", JSON.stringify(profile.checks));
     localStorage.setItem("safesteps_completed_lessons", JSON.stringify(profile.lessons));
     localStorage.setItem("safesteps_support_completed", profile.support ? "true" : "false");
     localStorage.setItem("safesteps_achievements", JSON.stringify(profile.achievements));
     window.dispatchEvent(new Event("safesteps_progress_changed"));
-  };
+  }
 
-  const loadGuestProgress = () => {
+  function loadGuestProgress() {
     const saved = localStorage.getItem("safesteps_guest_progress");
     if (saved) {
       const parsed = JSON.parse(saved);
@@ -233,7 +247,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem("safesteps_achievements", JSON.stringify([]));
     }
     window.dispatchEvent(new Event("safesteps_progress_changed"));
-  };
+  }
 
   const login = async (email: string, password?: string, rememberMe: boolean = true): Promise<boolean> => {
     const users = JSON.parse(localStorage.getItem("safesteps_users") || "{}");
